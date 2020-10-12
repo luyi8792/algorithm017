@@ -1,0 +1,15 @@
+hashmap 源码总结
+
+1 源码重要属性
+DEFAULT_INITIAL_CAPACITY = 16;(默认大小)
+MAXIMUM_CAPACITY = 1 << 30;(最大容量)
+DEFAULT_LOAD_FACTOR = 0.75f;(默认负载因子)
+
+2 实现逻辑
+通过hash算法为key生成数组下标进行存储 或者 查询 删除等操作
+hash冲突解决：当不同的key生成相同的hash值，就在该数组下标位置插入链表结构存储相同hash key
+的值，查询时定位到该链表后轮询，当链表size>=8  链表转化为红黑树，（为了查询的效率）
+
+3 优化
+hashMap调整大小会耗时，可以提前预设一个较大的size
+线程安全，使用ConcurrentHashMap（通过对hashMap的底层数组分段加锁实现区域安全）
